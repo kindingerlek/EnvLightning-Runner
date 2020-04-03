@@ -30,3 +30,14 @@ def multiply_tuple_by_scalar_int(tuple_value, scalar):
 
 def repeat(t, length):
     return t - math.floor(t/length) * length
+
+def smoothstep(t):
+    """Smooth curve with a zero derivative at 0 and 1, making it useful for
+    interpolating.
+    """
+    return t * t * (3. - 2. * t)
+
+
+def lerp(t, a, b):
+    """Linear interpolation between a and b, given a fraction t."""
+    return a + t * (b - a)

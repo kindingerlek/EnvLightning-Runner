@@ -2,6 +2,7 @@ import board
 from  envlight.animator_controller import AnimatorController
 import time
 import neopixel
+import argparse
 
 # LED strip configuration:
 LED_COUNT = 288             # Number of LED pixels.
@@ -19,6 +20,15 @@ def colorWipe(pixels, color, wait_ms=50):
 
 # Main program logic follows:
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--animation', help='Define the start animation')
+    parser.add_argument('--brightness', type=float, help = 'Define the brightness of pixels')
+    parser.add_argument('--count', type=int, help = 'Define the lenght of pixels')
+
+    args = parser.parse_args()
+
+    LED_BRIGHTNESS = args.brightness if args.brightness else LED_BRIGHTNESS
+    LED_COUNT = cmath.clamp_int(args.count, 0,288) if args.count else LED_COUNT
 
     # Create NeoPixel object with appropriate configuration.
     pixels = neopixel.NeoPixel(
@@ -27,7 +37,11 @@ if __name__ == '__main__':
     print('Press Ctrl-C to quit.')
 
     try:
-        anim_controller = AnimatorController(pixels)
+        if(args.animation):
+            anim_controller = AnimatorController(pixels, animation=args.animation)
+        else:
+            anim_controller = AnimatorController(pixels)
+
         anim_controller.run()
 
     except KeyboardInterrupt:

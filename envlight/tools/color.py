@@ -41,3 +41,14 @@ def rgb2hsv(r, g, b):
         s = df/mx
     v = mx
     return h, s, v
+
+def lerp( t:float, fromColor:tuple, toColor:tuple ):
+
+    r1,g1,b1 = fromColor
+    r2,g2,b2 = toColor
+
+    r = cmath.lerp_int(t,r1,r2)
+    g = cmath.lerp_int(t,g1,g2)
+    b = cmath.lerp_int(t,b1,b2)
+
+    return r,g,b

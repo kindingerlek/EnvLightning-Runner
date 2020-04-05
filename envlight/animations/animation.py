@@ -9,8 +9,8 @@ class Animation(object):
             loop : bool = True):
         self._pixels = pixels
         self._num_pixels = len(pixels)
-        self._loop = loop
-        self._done = False
+        self.loop = loop
+        self.done = False
         pass
 
     def clear(self):
@@ -33,4 +33,4 @@ class Animation(object):
             Call this method to finalize the animation.
             This not affect if animation is loop
         """
-        self._done = True
+        self.done = True

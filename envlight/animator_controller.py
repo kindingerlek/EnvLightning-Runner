@@ -18,7 +18,7 @@ class AnimatorController(object):
         self._running = False
         self.FPS = update_rate
 
-        self._animation = self.___get_animation(animation)
+        self._animation = self.__get_animation(animation)
 
         self._interlace = False
 
@@ -71,7 +71,7 @@ class AnimatorController(object):
 
         return waitTime
 
-    def __calc_and_print_FPS(self, cycle_time):
+    def __calc_FPS(self, cycle_time):
         """ Calculate the 'Frames' per second """
         self.FPS = int(1.0/cycle_time)
 
@@ -84,11 +84,11 @@ class AnimatorController(object):
 
     def __get_animation(self, animation: str):
         animations_list = {
-            "fire" : FireAnimation(pixels),
-            "rainbow" : RainbowPerlinAnimation(pixels),
-            "pingpong" : PingPongAnimation(pixels),
-            "fade": FadeAnimation(pixels),
-            "test": TestColorsAnimation(pixels)
+            "fire" : FireAnimation(self._pixels),
+            "rainbow" : RainbowPerlinAnimation(self._pixels),
+            "pingpong" : PingPongAnimation(self._pixels),
+            "fade": FadeAnimation(self._pixels),
+            "test": TestColorsAnimation(self._pixels)
         }
 
-        return animations[str.lower(animation)]
+        return animations_list[str.lower(animation)]

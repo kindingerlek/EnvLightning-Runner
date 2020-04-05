@@ -3,6 +3,7 @@ from  envlight.animator_controller import AnimatorController
 import time
 import neopixel
 import argparse
+from envlight.tools import cmath
 
 # LED strip configuration:
 LED_COUNT = 288             # Number of LED pixels.

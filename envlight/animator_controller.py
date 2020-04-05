@@ -4,14 +4,7 @@ import sys
 from neopixel import NeoPixel
 from .tools import cmath
 
-from .animations.animation import Animation
-from .animations.animation_fire import FireAnimation
-from .animations.animation_ping_pong import PingPongAnimation
-from .animations.animation_rainbow_perlin import RainbowPerlinAnimation
-from .animations.animation_collapsecenter import TurnCollapseCenterAnimation
-from .animations.animation_fade import FadeAnimation
-from .animations.animation_test_colors import TestColorsAnimation
-
+from .animations import *
 
 class AnimatorController(object):
     def __init__(self,
@@ -20,45 +13,57 @@ class AnimatorController(object):
                 update_rate: int = 60):
         self._pixels = pixels
 
-        animations = {
-            "fire" : FireAnimation(pixels),
-            "rainbow" : RainbowPerlinAnimation(pixels),
-            "pingpong" : PingPongAnimation(pixels),
-            "fade": FadeAnimation(pixels),
-            "test": TestColorsAnimation(pixels)
-        }
-
-
-        self._animation = animations[str.lower(animation)]
 
         self._update_time = (1.0/update_rate)
         self._running = False
         self.FPS = update_rate
 
+        self._animation = self.___get_animation(animation)
+
+        self._interlace = False
+
     def run(self):
+        """ Start the animator controller routine"""
         self._running = True
         self.__update()
 
     def stop(self):
-        self._animation = TurnCollapseCenterAnimation(self._pixels)
-        self.run()
+        """ Stop the animator controller routine"""
+        self._running = False
+        # self._animation = TurnCollapseCenterAnimation(self._pixels)
+        # self.run()
 
     def __update(self):
+        """ Update the state of animation and draw it into pixels"""
+
+        self._animation.start()
+
         while self._running:
+
+            if(not self._animation.loop and self._animation.done):
+                self.stop()
+                break
+
+            # Starting the execution cycle
             start_cycle_time = time.process_time()
 
             delta_time = 1.0 / self.FPS
             self._animation.update(delta_time)
             self._pixels.show()
 
+            # Ending the execution cycle
             end_cycle_time = time.process_time()
             
-            cycle_time = (end_cycle_time - start_cycle_time)
 
-            
-            self.__calc_and_print_FPS(cycle_time + self.__wait_next_update(cycle_time))
+            cycle_time = (end_cycle_time - start_cycle_time)            
+            self.__calc_FPS(cycle_time + self.__wait_next_update(cycle_time))
+            self.__print_FPS()
 
     def __wait_next_update(self, cycle_time):
+        """
+        Wait for next update cycle if the executation cycle was executed quicker
+        than refresh rate
+        """
         waitTime = cmath.clamp(self._update_time - cycle_time)    
         
         if(waitTime > 0):
@@ -66,8 +71,24 @@ class AnimatorController(object):
 
         return waitTime
 
-    def __calc_and_print_FPS(self, cycle_time):        
+    def __calc_and_print_FPS(self, cycle_time):
+        """ Calculate the 'Frames' per second """
         self.FPS = int(1.0/cycle_time)
 
+
+    def __print_FPS(self):
+        """ Print the FPS in console """
         sys.stdout.write(f"\rFPS: {self.FPS}")
         sys.stdout.flush()
+
+
+    def __get_animation(self, animation: str):
+        animations_list = {
+            "fire" : FireAnimation(pixels),
+            "rainbow" : RainbowPerlinAnimation(pixels),
+            "pingpong" : PingPongAnimation(pixels),
+            "fade": FadeAnimation(pixels),
+            "test": TestColorsAnimation(pixels)
+        }
+
+        return animations[str.lower(animation)]

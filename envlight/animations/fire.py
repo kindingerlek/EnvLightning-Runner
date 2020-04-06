@@ -9,8 +9,9 @@ class FireAnimation(Animation):
     def __init__(
             self,
             pixels,
-            speed : float = 15,
-            scale : float = 25):
+            speed : float = 25,
+            scale : float = 35):
+
         super().__init__(pixels)
         self._t = 0.0
 
@@ -27,8 +28,8 @@ class FireAnimation(Animation):
             
             h, s, v = color.rgb2hsv(255, 70, 0)
 
-            x = cmath.map(x, -0.75, 0.75, 0, 1)
-            x = x * x * x * x
+            x = cmath.map( x, -0.5, 0.75, 0, 1)
+            x = (x * x * x * x)
             x = cmath.clamp(x, 0.0, 1.0)
             
             v = x

@@ -46,11 +46,5 @@ if __name__ == '__main__':
         anim_controller.run()
 
     except KeyboardInterrupt:
-        print("\r\nStopping... Please Wait...")
-
-        for i in range(0, len(pixels)):
-            pixels[i] = (0, 0, 0)
-            pixels.show()
-            time.sleep(0 / 1000.0)
-        
-        print("Done!")
+        pixels.fill((0,0,0))
+        pixels.show()

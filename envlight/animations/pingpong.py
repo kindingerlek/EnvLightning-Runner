@@ -10,7 +10,7 @@ class PingPongAnimation(Animation):
     def __init__(self, pixels):
         super().__init__(pixels)
         self._angle = 0
-        self._speed = 40
+        self._speed = 60
 
 
         x = math.cos(math.radians(self._angle))

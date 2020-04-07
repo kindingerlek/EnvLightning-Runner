@@ -8,7 +8,7 @@ class Animation(object):
             pixels,
             loop : bool = True):
         self._pixels = pixels
-        self._num_pixels = len(pixels)
+        self.__num_pixels = len(pixels)
         self.loop = loop
         self.done = False
         pass
@@ -34,3 +34,6 @@ class Animation(object):
             This not affect if animation is loop
         """
         self.done = True
+
+    def get_pixels_count(self):
+        return self.__num_pixels

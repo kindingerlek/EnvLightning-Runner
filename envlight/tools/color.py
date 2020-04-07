@@ -1,7 +1,7 @@
 import math
 from . import cmath
 
-def hsv2rgb(h, s, v):
+def hsv_to_rgb(h, s, v):
     h = float(h)
     s = float(s)
     v = float(v)
@@ -22,7 +22,7 @@ def hsv2rgb(h, s, v):
     r, g, b = int(r * 255), int(g * 255), int(b * 255)    
     return r, g, b
     
-def rgb2hsv(r, g, b):
+def rgb_to_hsv(r, g, b):
     r, g, b = r/255.0, g/255.0, b/255.0
     mx = max(r, g, b)
     mn = min(r, g, b)
@@ -42,7 +42,7 @@ def rgb2hsv(r, g, b):
     v = mx
     return h, s, v
 
-def temperature2rgb(k: int):
+def temperature_to_rgb(k: int):
     """
         Start with a temperature, in Kelvin, somewhere between 1000 and 40000.
         (Other values may work, but I can't make any promises about the quality
@@ -94,14 +94,16 @@ def temperature2rgb(k: int):
     return r, g, b
 
 
-def rgb2temperature(r, g, b):
+def rgb_to_temperature(r, g, b):
     k = 0
 
     if(r == 255):
         k = math.pow(math.e,((g + 161.1195681661)/99.4708025861))        
+    else:
+        k = (g/288.1221695283)**(1.0/-0.0755148492)
+        k += 60
 
-
-    return k
+    return k * 100
 
 def lerp( t:float, fromColor:tuple, toColor:tuple ):
 

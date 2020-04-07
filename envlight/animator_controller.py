@@ -84,11 +84,12 @@ class AnimatorController(object):
 
     def __get_animation(self, animation: str):
         animations_list = {
-            "fire" : FireAnimation(self._pixels),
-            "rainbow" : RainbowPerlinAnimation(self._pixels),
-            "pingpong" : PingPongAnimation(self._pixels),
-            "fade": FadeAnimation(self._pixels),
-            "test": TestColorsAnimation(self._pixels)
+            "fire"          : FireAnimation(self._pixels),
+            "fade"          : FadeAnimation(self._pixels),
+            "pingpong"      : PingPongAnimation(self._pixels),
+            "test"          : TestColorsAnimation(self._pixels),
+            "rainbow"       : RainbowPerlinAnimation(self._pixels),
+            "rainbowwheel"  : RainbowWheelAnimation(self._pixels)
         }
 
         return animations_list[str.lower(animation)]

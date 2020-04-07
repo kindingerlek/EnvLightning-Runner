@@ -31,7 +31,7 @@ class RainbowPerlinAnimation(Animation):
             s = 1.0
             v = 1.0
             
-            r, g, b = color.hsv2rgb(h,s,v)
+            r, g, b = color.hsv_to_rgb(h,s,v)
 
             self._pixels[i] = (int(r),int(g),int(b))
         

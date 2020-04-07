@@ -6,7 +6,7 @@ import argparse
 from envlight.tools import cmath
 
 # LED strip configuration:
-LED_COUNT = 288             # Number of LED pixels.
+LED_COUNT = 228             # Number of LED pixels.
 LED_PIN = board.D18         # GPIO pin connected to the pixels (18 uses PWM!).
 LED_BRIGHTNESS = .35        # Set to 0.0 for darkest and 1.0 for brightest
 
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     LED_BRIGHTNESS = args.brightness if args.brightness else LED_BRIGHTNESS
-    LED_COUNT = cmath.clamp_int(args.count, 0,288) if args.count else LED_COUNT
+    LED_COUNT = cmath.clamp_int(args.count, 0,228) if args.count else LED_COUNT
 
     # Create NeoPixel object with appropriate configuration.
     pixels = neopixel.NeoPixel(

@@ -1,46 +1,50 @@
 import time
 import sys
+import threading
 
 from neopixel import NeoPixel
 from .tools import cmath
 
 from .animations import *
 
-class AnimatorController(object):
+class AnimatorController():
     def __init__(self,
                 pixels: NeoPixel,
                 animation: str = "fire",
                 update_rate: int = 60):
+        
+        super(AnimatorController, self)
+        self._stop = threading.Event()
+
         self._pixels = pixels
 
+        self.FPS = update_rate
 
         self._update_time = (1.0/update_rate)
         self._running = False
-        self.FPS = update_rate
-
         self._animation = self.__get_animation(animation)
-
         self._interlace = False
 
+        self._thread = threading.Thread(target=self.__update)
+
+        self._thread.setName("Update pixels Cycle")
+
     def run(self):
-        """ Start the animator controller routine"""
+        """ Start the animator controller routine"""        
         self._running = True
-        self.__update()
+        self._thread.start()
 
     def stop(self):
         """ Stop the animator controller routine"""
         self._running = False
-        # self._animation = TurnCollapseCenterAnimation(self._pixels)
-        # self.run()
+        self._thread.join()
 
     def __update(self):
         """ Update the state of animation and draw it into pixels"""
 
         self._animation.start()
-
         while self._running:
-
-            if(not self._animation.loop and self._animation.done):
+            if not self._animation.loop and self._animation.done:
                 self.stop()
                 break
 
@@ -58,6 +62,7 @@ class AnimatorController(object):
             cycle_time = (end_cycle_time - start_cycle_time)            
             self.__calc_FPS(cycle_time + self.__wait_next_update(cycle_time))
             self.__print_FPS()
+
 
     def __wait_next_update(self, cycle_time):
         """
@@ -93,3 +98,5 @@ class AnimatorController(object):
         }
 
         return animations_list[str.lower(animation)]
+
+    

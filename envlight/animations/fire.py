@@ -23,13 +23,13 @@ class FireAnimation(Animation):
 
 
     def update(self, deltaTime):
-        for i in range(0, self._num_pixels-1):
+        for i in range(0, self.get_pixels_count()-1):
             x = pnoise2(
                 i / self._scale,
                 self._t / self._scale,
                 octaves=self._octaves)
             
-            h, s, v = color.rgb_to_hsv(**self._basecolor)
+            h, s, v = color.rgb_to_hsv(*self._basecolor)
 
             x = cmath.map( x, -0.5, 0.75, 0, 1)
             x = (x * x * x * x)

@@ -1,5 +1,5 @@
 import math
-from . import cmath
+#from . import cmath
 
 def hsv_to_rgb(h, s, v):
     h = float(h)
@@ -42,7 +42,7 @@ def rgb_to_hsv(r, g, b):
     v = mx
     return h, s, v
 
-def temperature_to_rgb(k: int):
+def temperature_to_rgb(k: float):
     """
         Start with a temperature, in Kelvin, somewhere between 1000 and 40000.
         (Other values may work, but I can't make any promises about the quality
@@ -59,7 +59,7 @@ def temperature_to_rgb(k: int):
 
 
     #Calculate Red:
-    if (k <= 66):
+    if (k <= 66.):
         r = 255.0
     else:
         r = k - 60
@@ -68,30 +68,30 @@ def temperature_to_rgb(k: int):
         if (r > 255) : r = 255
     
     #Calculate Green:
-    if (k <= 66):
+    if (k <= 66.):
         g = k
         g = 99.4708025861 * math.log(g) - 161.1195681661
         if (g < 0): g = 0
         if (g > 255): g = 255
     else:
-        g = k - 60
+        g = k - 60.
         g = 288.1221695283 * (math.pow(g , -0.0755148492))
         if (g < 0): g = 0
         if (g > 255): g = 255
     
     #Calculate Blue:
-    if (k >= 66):
+    if (k >= 66.):
         b = 255
     else:
-        if (k <= 19):
+        if (k <= 19.):
             b = 0
         else:
-            b = k - 10
+            b = k - 10.
             b = 138.5177312231 * math.log(b) - 305.0447927307
             if (b < 0): b = 0
             if (b > 255): b = 255
 
-    return r, g, b
+    return int(r), int(g), int(b)
 
 
 def rgb_to_temperature(r, g, b):
@@ -105,13 +105,13 @@ def rgb_to_temperature(r, g, b):
 
     return k * 100
 
-def lerp( t:float, fromColor:tuple, toColor:tuple ):
+# def lerp( t:float, fromColor:tuple, toColor:tuple ):
 
-    r1,g1,b1 = fromColor
-    r2,g2,b2 = toColor
+#     r1,g1,b1 = fromColor
+#     r2,g2,b2 = toColor
 
-    r = cmath.lerp_int(t,r1,r2)
-    g = cmath.lerp_int(t,g1,g2)
-    b = cmath.lerp_int(t,b1,b2)
+#     r = cmath.lerp_int(t,r1,r2)
+#     g = cmath.lerp_int(t,g1,g2)
+#     b = cmath.lerp_int(t,b1,b2)
 
-    return r,g,b
+#     return r,g,b

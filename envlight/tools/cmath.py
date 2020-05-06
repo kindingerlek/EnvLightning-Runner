@@ -17,7 +17,7 @@ def lerp_int(t: float, fromValue: float, toValue: float) -> int:
     return int(lerp(t,fromValue, toValue))
 
 def inv_lerp(value: float, minimum: float, maximum: float):
-    return map(value, minimum, maximum)
+    return map(value, 0.0, 1.0,minimum, maximum)
 
 def inv_lerp_int(value: float, minimum: float, maximum: float):
     return int(inv_lerp(value, minimum, maximum))

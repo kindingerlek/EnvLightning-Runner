@@ -26,13 +26,17 @@ class AnimatorController():
         self._interlace = False
 
         self._thread = threading.Thread(target=self.__update)
+        self._thread.daemon = True
 
         self._thread.setName("Update pixels Cycle")
 
     def run(self):
         """ Start the animator controller routine"""        
+        try:
         self._running = True
         self._thread.start()
+        except (KeyboardInterrupt, SystemExit):
+            print ('\n! Received keyboard interrupt, quitting threads.\n')
 
     def stop(self):
         """ Stop the animator controller routine"""
@@ -94,7 +98,7 @@ class AnimatorController():
             "pingpong"      : PingPongAnimation(self._pixels),
             "test"          : TestColorsAnimation(self._pixels),
             "rainbow"       : RainbowPerlinAnimation(self._pixels),
-            "rainbowwheel"  : RainbowWheelAnimation(self._pixels)
+            "rainbowwheel"  : RainbowWheelAnimation(self._pixels),
         }
 
         return animations_list[str.lower(animation)]

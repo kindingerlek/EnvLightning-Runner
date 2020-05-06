@@ -7,15 +7,16 @@ import signal
 from envlight.tools import cmath
 
 # LED strip configuration:
-LED_COUNT = 228             # Number of LED pixels.
+LED_COUNT = 225             # Number of LED pixels.
 LED_PIN = board.D18         # GPIO pin connected to the pixels (18 uses PWM!).
 LED_BRIGHTNESS = .35        # Set to 0.0 for darkest and 1.0 for brightest
 
 def keyboardInterruptHandler(signal, frame):
+    print(f"\nKeyboardInterrupt! Stopping...")
     anim_controller.stop()
     pixels.fill((0,0,0))
     pixels.show()
-    print("")
+    exit(0)
 
 
 # Main program logic follows:
@@ -44,3 +45,5 @@ if __name__ == '__main__':
         anim_controller = AnimatorController(pixels)
 
     anim_controller.run()
+    signal.pause()
+    #anim_controller.stop()

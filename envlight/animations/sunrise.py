@@ -43,8 +43,6 @@ class SunriseAnimation(Animation):
             angle = cmath.map(i, 0, self.get_pixels_count(),0,180)
             sin = 1-math.sin(math.radians(angle))
 
-            #r,g,b = cmath.multiply_tuple_by_scalar((r,g,b), diff)
-
             if(t > sin):
                 if(not light_on):
                     start = i

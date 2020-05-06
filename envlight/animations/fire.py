@@ -10,7 +10,7 @@ class FireAnimation(Animation):
             self,
             pixels,
             speed : float = 25,
-            scale : float = 60,
+            scale : float = 80,
             basecolor : tuple = (255, 70, 0)):
 
         super().__init__(pixels)
@@ -29,15 +29,17 @@ class FireAnimation(Animation):
                 self._t / self._scale,
                 octaves=self._octaves)
             
-            h, s, v = color.rgb_to_hsv(*self._basecolor)
 
-            x = cmath.map( x, -0.5, 0.75, 0, 1)
-            x = (x * x * x * x)
+            x = cmath.map( x, -0.5, .75, 0, 1)
+            x = (x * x * x * x) * 4
             x = cmath.clamp(x, 0.0, 1.0)
             
-            v = x
+            k = cmath.inv_lerp(x, 500, 2000)
             
-            r, g, b = color.hsv_to_rgb(h,s,v)
+            h, s, v = color.rgb_to_hsv(*color.temperature_to_rgb(k))
+            v = x
+
+            r,g,b = color.hsv_to_rgb( h, s, v)
 
             self._pixels[i] = (int(r),int(g),int(b))
         self._t += deltaTime * self._speed 

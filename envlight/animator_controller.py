@@ -10,7 +10,7 @@ from .animations import *
 class AnimatorController():
     def __init__(self,
                 pixels: NeoPixel,
-                animation: str = "fire",
+                animation: str = "sunrise",
                 update_rate: int = 60):
         
         super(AnimatorController, self)
@@ -33,8 +33,8 @@ class AnimatorController():
     def run(self):
         """ Start the animator controller routine"""        
         try:
-        self._running = True
-        self._thread.start()
+            self._running = True
+            self._thread.start()
         except (KeyboardInterrupt, SystemExit):
             print ('\n! Received keyboard interrupt, quitting threads.\n')
 
@@ -99,6 +99,7 @@ class AnimatorController():
             "test"          : TestColorsAnimation(self._pixels),
             "rainbow"       : RainbowPerlinAnimation(self._pixels),
             "rainbowwheel"  : RainbowWheelAnimation(self._pixels),
+            "sunrise"       : SunriseAnimation(self._pixels)
         }
 
         return animations_list[str.lower(animation)]

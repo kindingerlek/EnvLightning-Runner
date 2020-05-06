@@ -16,7 +16,7 @@ class RainbowPerlinAnimation(Animation):
         self.hue_time = 180
 
     def update(self, deltaTime):
-        for i in range(0, self._num_pixels-1):
+        for i in range(0, self.get_pixels_count()-1):
             x = pnoise2(
                 i / self.scale,
                 self.t / self.scale,

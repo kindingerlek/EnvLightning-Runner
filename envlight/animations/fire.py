@@ -10,8 +10,7 @@ class FireAnimation(Animation):
             self,
             pixels,
             speed : float = 25,
-            scale : float = 80,
-            basecolor : tuple = (255, 70, 0)):
+            scale : float = 80):
 
         super().__init__(pixels)
         self._t = 0.0
@@ -19,8 +18,6 @@ class FireAnimation(Animation):
         self._octaves = 6
         self._speed = speed
         self._scale = scale
-        self._basecolor = basecolor
-
 
     def update(self, deltaTime):
         for i in range(0, self.get_pixels_count()-1):

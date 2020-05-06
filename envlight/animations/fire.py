@@ -28,22 +28,22 @@ class FireAnimation(Animation):
                 octaves=self._octaves)
             
             # Take the values from range -.5 to .75, and map to 0 to 1            
-            heat = cmath.map( x, -0.5, .75, 0, 1)
+            heat = cmath.map( heat, -0.5, .75, 0, 1)
 
             # convert the linear space to exponential space, and bump up the values
             heat = (heat * heat * heat * heat) * 4
             
             # Limit the values to range [ 0, 1]
-            heat = cmath.clamp(x, 0.0, 1.0)
+            heat = cmath.clamp(heat, 0.0, 1.0)
             
             # Get map the heat value between some celsius temperature range
-            k = cmath.inv_lerp(x, 500, 2000)
+            k = cmath.inv_lerp(heat, 500, 2000)
             
             # Get color from temperature
             h, s, v = color.rgb_to_hsv(*color.temperature_to_rgb(k))
 
             # Make the brightness of pixel proportional to heat
-            v = x
+            v = heat
             r,g,b = color.hsv_to_rgb(h, s, v)
 
             # Write Pixel
